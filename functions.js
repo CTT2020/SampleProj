@@ -43,9 +43,12 @@ function createUser(){
                 email : emailId.value,
                 DOB : dob.value,
             });
-        
+            alert("User Created Successfully!!");
             console.log("User Created Successfully!!");
-        }
+            document.getElementById("uId").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("uname").value = "";
+            document.getElementById("dob").value = "";      }
     });
 
 };
@@ -62,11 +65,17 @@ function deleteUser(){
         if (snapshot.exists()){
             database.ref('/users/'+userId.value).remove();
             console.log("User Deleted Successfully");
+            alert("User Deleted Successfully!!");
         }
         else{        
             alert("User Does Not Exist!!");
         }
+        document.getElementById("uId").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("uname").value = "";
+        document.getElementById("dob").value = ""; 
     });
+    
 }
 
 function updateUser(){
@@ -85,10 +94,15 @@ function updateUser(){
                 DOB : dob.value,
             });
             console.log("User Updated Successfully");
+            alert("User Updated Successfully!!");
         }
         else{        
             alert("User Does Not Exist!!");
         }
+        document.getElementById("uId").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("uname").value = "";
+        document.getElementById("dob").value = ""; 
     });
 
     
