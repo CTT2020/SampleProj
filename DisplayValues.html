@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body onload="readUser()">
+    <div class="row">
+        <div class="col-sm-12 column">
+            <table>
+                <thead>
+                    <tr id="a">
+                        <th id="a1">Name<br></th>
+                        <th id="a2">Email ID <br></th>
+                        <th id="a3">ID<br> </th>
+                        <th id="a4">D.O.B<br></th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>      
+        </table>
+    </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyAN7T0pYtChBpeYIFXtd3PUt4Y2W1LSaFc",
+      authDomain: "sampleproj-ee7ae.firebaseapp.com",
+      databaseURL: "https://sampleproj-ee7ae-default-rtdb.firebaseio.com",
+      projectId: "sampleproj-ee7ae",
+      storageBucket: "sampleproj-ee7ae.appspot.com",
+      messagingSenderId: "28286499634",
+      appId: "1:28286499634:web:56358e965a1f3cb4e7b52b",
+      measurementId: "G-07M9LFMD3P"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="functions.js"></script>
+</body>
+</html>
