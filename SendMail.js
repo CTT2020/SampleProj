@@ -32,17 +32,18 @@ function sendEmail() {
             var list = "";
             let name = users.val().user_name;
             let db = new Date(users.val().DOB);
-            let today = new Date();
-            let mail = users.val().email;
-            let daystogo = new Date(today.getFullYear(), db.getMonth(), db.getDate());
-            if (today.getMonth() == db.getMonth() && today.getDate() > db.getDate()) 
+            let birthdate = db.toISOString().slice(0, 10);
+            let today = moment().format('YYYY-MM-DD');
+            let years = moment().diff(birthdate, 'years');
+            let adjustToday = (birthdate.substring(5) == today.substring(5)) ? 0 : 1;
+            let nextBirthday = moment(birthdate).add(years + adjustToday, 'years');
+            let daysUntilBirthday = nextBirthday.diff(today, 'days');
+            if(daysUntilBirthday > parseInt(365))
             {
-                daystogo.setFullYear(daystogo.getFullYear() + 1);
+                daysUntilBirthday = daysUntilBirthday - parseInt(365);
             }
-            let one_day = 1000 * 60 * 60 * 24;
-            let result = Math.ceil((daystogo.getTime() - today.getTime()) / (one_day));
-            let numdaystogo = Math.abs(result);
-            if (numdaystogo == 0) {
+            if (daysUntilBirthday == 0)
+            {
                 Email.send({
                     Host: "smtp.gmail.com",
                     Username: 'trctt2020@gmail.com',
@@ -64,15 +65,18 @@ function havingbirthdaytoday() {
             var list = "";
             let name = users.val().user_name;
             let db = new Date(users.val().DOB);
-            let today = new Date();
-            let daystogo = new Date(today.getFullYear(), db.getMonth(), db.getDate());
-            if (today.getMonth() == db.getMonth() && today.getDate() > db.getDate()) {
-                daystogo.setFullYear(daystogo.getFullYear() + 1);
+            let birthdate = db.toISOString().slice(0, 10);
+            let today = moment().format('YYYY-MM-DD');
+            let years = moment().diff(birthdate, 'years');
+            let adjustToday = (birthdate.substring(5) == today.substring(5)) ? 0 : 1;
+            let nextBirthday = moment(birthdate).add(years + adjustToday, 'years');
+            let daysUntilBirthday = nextBirthday.diff(today, 'days');
+            if(daysUntilBirthday > parseInt(365))
+            {
+                daysUntilBirthday = daysUntilBirthday - parseInt(365);
             }
-            let one_day = 1000 * 60 * 60 * 24;
-            let result = Math.ceil((daystogo.getTime() - today.getTime()) / (one_day));
-            let numdaystogo = Math.abs(result);
-            if (numdaystogo == 0) {
+            if (daysUntilBirthday == 0)
+            {
                 list += '<tr>';
                 list += '<td>' + '<h3>' + name + '</h3>' + '</td>';
                 list += '</tr>';
