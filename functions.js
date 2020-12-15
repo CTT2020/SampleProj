@@ -119,7 +119,7 @@ function readUser() {
             let birthdate = db.toISOString().slice(0, 10);
             let today = moment().format('YYYY-MM-DD');
             let years = moment().diff(birthdate, 'years');
-            let adjustToday = (birthdate.substring(5) == today.substring(5)) ? 0 : 1;
+            let adjustToday = (birthdate.substring(5) === today.substring(5)) ? 0 : 1;
             let nextBirthday = moment(birthdate).add(years + adjustToday, 'years');
             let daysUntilBirthday = nextBirthday.diff(today, 'days');
             if(daysUntilBirthday > parseInt(365))
