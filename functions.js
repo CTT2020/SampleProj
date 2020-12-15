@@ -115,15 +115,17 @@ function readUser() {
             var id = users.val().userid;
             var db = new Date(users.val().DOB);
             var mail = users.val().email;
-            today = new Date();
-            var daystogo = new Date(today.getFullYear(), db.getMonth(), db.getDate());
-            if (today.getMonth() == db.getMonth() && today.getDate() > db.getDate()) {
-                daystogo.setFullYear(daystogo.getFullYear() + 1);
+            var dbinformat = db.toDateString().substring(4,15);
+            let birthdate = db.toISOString().slice(0, 10);
+            let today = moment().format('YYYY-MM-DD');
+            let years = moment().diff(birthdate, 'years');
+            let adjustToday = (birthdate.substring(5) == today.substring(5)) ? 0 : 1;
+            let nextBirthday = moment(birthdate).add(years + adjustToday, 'years');
+            let daysUntilBirthday = nextBirthday.diff(today, 'days');
+            if(daysUntilBirthday > parseInt(365))
+            {
+                daysUntilBirthday = daysUntilBirthday - parseInt(365);
             }
-            var one_day = 1000 * 60 * 60 * 24;
-            var result = Math.ceil((daystogo.getTime() - today.getTime()) / (one_day));
-            var numdaystogo = Math.abs(result);
-            var dbinformat = db.toLocaleDateString();
             var content = "";
             console.log("Name: " + name + " ID: " + id + " DOB: " + db + " Mail: " + mail);
             content += '<tr>';
@@ -131,7 +133,7 @@ function readUser() {
             content += '<td>' + mail + '</td>';
             content += '<td>' + id + '</td>';
             content += '<td>' + dbinformat + '</td>';
-            content += '<td>' + numdaystogo + '</td>';
+            content += '<td>' + daysUntilBirthday + '</td>';
             content += '</tr>';
             $('table').append(content);
         });
