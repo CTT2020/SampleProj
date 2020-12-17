@@ -116,7 +116,7 @@ function readUser() {
             var db = new Date(users.val().DOB);
             var mail = users.val().email;
             var dbinformat = db.toDateString().substring(4,15);
-            let birthdate = db.toISOString().slice(0, 10);
+            let birthdate = db.toLocaleDateString('en-CA');
             let today = moment().format('YYYY-MM-DD');
             let years = moment().diff(birthdate, 'years');
             let adjustToday = (birthdate.substring(5) === today.substring(5)) ? 0 : 1;
@@ -141,17 +141,45 @@ function readUser() {
 }
 
 
+
+
+
     function Login()
 {
-    const loginid = document.getElementById('loginid');
-    const password = document.getElementById('password');
-    const promise = auth.signInWithEmailAndPassword(loginid.value, password.value);
-    promise.catch(e => alert(e.message));
-    alert("Signed In as "+ loginid.value);
-    firebase.auth().onAuthStateChanged(user => {
-        if(user) {
-          window.location = 'CRUDPage.html';
-        }
-      });
+    var loginemail = document.getElementById("loginid").value;
+    var pwd = document.getElementById("password").value;
+   firebase.auth().signInWithEmailAndPassword(loginemail, pwd).catch(function(error)
+    {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert("Error : " + errorMessage);
+        return;
+    });
+   // unsubscribeAfterAuth();
+   firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+    location="CRUDPage.html";
+    var user = firebase.auth().currentUser;
+  } 
+  else {
+return false;
+  }
+});
 }
+
+
+
+function Logout(){
+    firebase.auth().signOut();
+    location="index.html";
+  }  
+
+//unsubscribeAfterAuth();  
+ // unsubscribeAfterAuth();
+  /*firebase.auth().signInWithEmailAndPassword(loginid, password).then(user => {
+    // Sign in success
+    window.location = "CRUDPage.html";
+}).catch(error => {
+    console.error(error);
+})*/
 

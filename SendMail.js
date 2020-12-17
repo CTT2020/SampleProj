@@ -32,10 +32,11 @@ function sendEmail() {
             var list = "";
             let name = users.val().user_name;
             let db = new Date(users.val().DOB);
-            let birthdate = db.toISOString().slice(0, 10);
+            let mail = users.val().email;
+            let birthdate = db.toLocaleDateString('en-CA');
             let today = moment().format('YYYY-MM-DD');
             let years = moment().diff(birthdate, 'years');
-            let adjustToday = (birthdate.substring(5) == today.substring(5)) ? 0 : 1;
+            let adjustToday = (birthdate.substring(5) === today.substring(5)) ? 0 : 1;
             let nextBirthday = moment(birthdate).add(years + adjustToday, 'years');
             let daysUntilBirthday = nextBirthday.diff(today, 'days');
             if(daysUntilBirthday > parseInt(365))
@@ -59,13 +60,17 @@ function sendEmail() {
     }))
 }
 
+
+var flag = false;
+var list = "";
+var nobirthdayString ="Seems like there are no birthdays today!!";
+
 function havingbirthdaytoday() {
     database.ref('/users/').once('value', (function (snapshot) {
         snapshot.forEach(function (users) {
-            var list = "";
             let name = users.val().user_name;
             let db = new Date(users.val().DOB);
-            let birthdate = db.toISOString().slice(0, 10);
+            let birthdate = db.toLocaleDateString('en-CA');
             let today = moment().format('YYYY-MM-DD');
             let years = moment().diff(birthdate, 'years');
             let adjustToday = (birthdate.substring(5) === today.substring(5)) ? 0 : 1;
@@ -77,11 +82,19 @@ function havingbirthdaytoday() {
             }
             if (daysUntilBirthday == 0)
             {
+                flag = true;
                 list += '<tr>';
                 list += '<td>' + '<h3>' + name + '</h3>' + '</td>';
                 list += '</tr>';
                 $('table').append(list);
             }
         });
+        if(flag == false)
+        {
+            list += '<tr>';
+            list += '<td>' + '<h3>' + nobirthdayString + '</h3>' + '</td>';
+            list += '</tr>';
+            $('table').append(list);   
+        }
     }))
 }
